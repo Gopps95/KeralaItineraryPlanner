@@ -2,20 +2,17 @@ import random
 import json
 import pickle
 import numpy as np
-
 import nltk
 from nltk.stem import WordNetLemmatizer
-import pandas as pd
 from tensorflow.keras.models import load_model
+import requests
 
 lemmatizer = WordNetLemmatizer()
-intents = json.loads(open(r'D:\Projects\New folder\Project\intents.json').read())
-
+intents = json.loads(open(r'C:\Users\ALEENA\Desktop\project\KeralaItineraryPlanner\Chatbot\intents.json').read())
 
 words = pickle.load(open('words.pkl','rb'))
 classes = pickle.load(open('classes.pkl','rb'))
 model = load_model('chatbot_model.h5')
-
 
 def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
@@ -52,13 +49,21 @@ def get_response(intents_list, intents_json):
             break
     return result
 
+def weather(city):
+    url = f"https://api.weatherapi.com/v1/current.json?key=3ae3dea5a8864fd6bf2140701230606&q={city}"
+    r = requests.get(url)
+    weather_data = json.loads(r.text)
+    temperature = weather_data['current']['temp_c']
+    return f"The Temperature of {city} is {temperature}"
 
 print("GO! Bot is running")
 
 while True:
     message = input("")
-    ints = predict_class(message)
-    res = get_response(ints,intents)
-    print(res)
-
-
+    if message.startswith("What is the weather in "):
+        city = message[23:]
+        print(weather(city))
+    else:
+        ints = predict_class(message)
+        res = get_response(ints, intents)
+        print(res)

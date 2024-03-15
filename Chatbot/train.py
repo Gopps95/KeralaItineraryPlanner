@@ -12,10 +12,11 @@ from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.models import load_model
 
 nltk.download('wordnet')
+nltk.download('punkt')
 
 lemmatizer = WordNetLemmatizer()
 
-intents = json.loads(open(r'D:\Projects\New folder\Project\intents.json').read())
+intents = json.loads(open(r'D:\College\S8\Major\Code\KeralaItineraryPlanner\Chatbot\intents.json').read())
 
 words = []
 classes = []

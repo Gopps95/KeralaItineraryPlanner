@@ -16,7 +16,11 @@ nltk.download('punkt')
 
 lemmatizer = WordNetLemmatizer()
 
+<<<<<<< HEAD
 intents = json.loads(open(r'D:\College\S8\Major\Code\KeralaItineraryPlanner\Chatbot\intents.json').read())
+=======
+intents = json.loads(open(r'C:\Users\ALEENA\Desktop\project\KeralaItineraryPlanner\Chatbot\intents.json').read())
+>>>>>>> f937a280e0c2187a592a7b11cdaae72bfe503cf2
 
 words = []
 classes = []

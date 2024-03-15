@@ -1,25 +1,39 @@
 from flask import Flask, request, jsonify
 import random
 import json
+import nltk
 import pickle
 import numpy as np
+<<<<<<< HEAD
 import nltk
 from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.models import load_model
 from flask_cors import CORS
+=======
+from nltk.stem import WordNetLemmatizer
+from tensorflow.keras.models import load_model
+import requests
+>>>>>>> f937a280e0c2187a592a7b11cdaae72bfe503cf2
 
 app = Flask(__name__)
 CORS(app)
 
 # Load necessary resources
 lemmatizer = WordNetLemmatizer()
+<<<<<<< HEAD
 intents = json.loads(open('D:/College/S8/Major/Code/KeralaItineraryPlanner/Chatbot/intents.json').read())  # Adjust the path accordingly
+=======
+intents = json.loads(open(r'C:\Users\ALEENA\Desktop\project\KeralaItineraryPlanner\Chatbot\intents.json').read())
+>>>>>>> f937a280e0c2187a592a7b11cdaae72bfe503cf2
 
 words = pickle.load(open('words.pkl','rb'))
 classes = pickle.load(open('classes.pkl','rb'))
 model = load_model('chatbot_model.h5')
 
+<<<<<<< HEAD
 # Functions to preprocess input and generate responses
+=======
+>>>>>>> f937a280e0c2187a592a7b11cdaae72bfe503cf2
 def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
     sentence_words = [lemmatizer.lemmatize(word) for word in sentence_words]
@@ -54,6 +68,7 @@ def get_response(intents_list, intents_json):
             break
     return result
 
+<<<<<<< HEAD
 # Define API endpoints
 @app.route('/api/chatbot', methods=['POST', 'GET'])
 def chatbot():
@@ -78,3 +93,23 @@ def chatbot():
 
 if __name__ == '__main__':
     app.run(debug=True)  # You can set debug=False for production
+=======
+def weather(city):
+    url = f"https://api.weatherapi.com/v1/current.json?key=3ae3dea5a8864fd6bf2140701230606&q={city}"
+    r = requests.get(url)
+    weather_data = json.loads(r.text)
+    temperature = weather_data['current']['temp_c']
+    return f"The Temperature of {city} is {temperature}"
+
+print("GO! Bot is running")
+
+while True:
+    message = input("")
+    if message.startswith("What is the weather in "):
+        city = message[23:]
+        print(weather(city))
+    else:
+        ints = predict_class(message)
+        res = get_response(ints, intents)
+        print(res)
+>>>>>>> f937a280e0c2187a592a7b11cdaae72bfe503cf2
